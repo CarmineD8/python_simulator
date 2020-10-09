@@ -23,10 +23,10 @@ Steps to be performed: - hint: use a while loop for the control of the robot
 
 
 a_th = 2.0
-""" float: Threshold for the control of the linear distance"""
+""" float: Threshold for the control of the orientation"""
 
 d_th = 0.4
-""" float: Threshold for the control of the orientation"""
+""" float: Threshold for the control of the linear distance"""
 
 R = Robot()
 """ instance of the class Robot"""
