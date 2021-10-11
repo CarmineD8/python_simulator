@@ -13,7 +13,7 @@ GAMES = {'caldera': CalderaArena,
          'ctf': CTFArena,
          'sunny-side-up': SunnySideUpArena,
          'abc': ABCArena,
-         'two-colours': TwoColoursArena,
+         'two-colours': TwoColoursArena
         }
 
 class Simulator(object):

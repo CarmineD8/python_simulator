@@ -15,7 +15,7 @@ MAX_MOTOR_SPEED = 100
 
 GRAB_RADIUS = 0.4
 HALF_GRAB_SECTOR_WIDTH = pi / 4
-HALF_FOV_WIDTH = pi / 6
+HALF_FOV_WIDTH = pi / 2
 
 GRABBER_OFFSET = 0.25
 
@@ -197,22 +197,28 @@ class SimRobot(GameObject):
             # Simple approximation: we can't see anything if either it's moving
             # or we're moving. This doesn't handle tokens grabbed by other robots
             # but Sod's Law says we're likely to see those anyway.
-            return (robot_moving(self) or
-                    isinstance(o, SimRobot) and robot_moving(o))
+            #return (robot_moving(self) or
+            #        isinstance(o, SimRobot) and robot_moving(o))
+            return False
 
         def object_filter(o):
             # Choose only marked objects within the field of view
             direction = atan2(o.location[1] - y, o.location[0] - x)
-            return (o.marker_info != None and
-                    o is not self and
-                    -HALF_FOV_WIDTH < direction - heading < HALF_FOV_WIDTH and
-                    not motion_blurred(o))
+            return (o.marker_info != None) #and
+                    #o is not self and
+                    #-HALF_FOV_WIDTH < direction - heading < HALF_FOV_WIDTH and
+                    #not motion_blurred(o))
+            
 
         def marker_map(o):
             # Turn a marked object into a Marker
             rel_x, rel_y = (o.location[0] - x, o.location[1] - y)
-            polar_coord = PolarCoord(length=hypot(rel_x, rel_y), \
-                                     rot_y=degrees(atan2(rel_y, rel_x) - heading))
+            rot_y=degrees(atan2(rel_y, rel_x) - heading)
+            if rot_y>180.0:
+                rot_y=rot_y-360.0
+            elif rot_y<-180.0:
+                rot_y=rot_y+360.0
+            polar_coord = PolarCoord(length=hypot(rel_x, rel_y),rot_y=rot_y)
             # TODO: Check polar coordinates are the right way around
             return Marker(info=o.marker_info,
                           centre=Point(polar_coord),
