@@ -45,10 +45,11 @@ class Simulator(object):
         clock = pygame.time.Clock()
 
         while True:
-            if any(event.type == pygame.QUIT
-                    or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE)
-                    for event in pygame.event.get()):
-                break
+            for event in pygame.event.get():
+                if ((event.type == pygame.QUIT) or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE)):
+                    break
+                if (event.type == pygame.VIDEORESIZE):
+                    self.display.resize(event)
 
             self.display.tick(1/frames_per_second)
             clock.tick(frames_per_second)

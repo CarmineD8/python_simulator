@@ -30,7 +30,7 @@ class Display(object):
         )
 
         pygame.display.init()
-        self._window = pygame.display.set_mode(self.size)
+        self._window = pygame.display.set_mode(self.size, pygame.RESIZABLE)
         pygame.display.set_caption("SR Turtle Robot Simulator")
         self._screen = pygame.display.get_surface()
         self._draw_background()
@@ -44,7 +44,7 @@ class Display(object):
         self.arena.draw_background(self._background, self)
 
     def _draw(self):
-        self._screen.blit(self._background, (0, 0))
+        self._screen.blit(pygame.transform.scale(self._background,self.size), (0, 0))
 
         for obj in self.arena.objects:
             if obj.surface_name is None:
@@ -55,10 +55,21 @@ class Display(object):
             surface = get_surface(obj.surface_name)
             surface = pygame.transform.rotate(surface, heading)
             object_width, object_height = surface.get_size()
-            screen_location = (x - object_width / 2, y - object_height / 2)
+            surface = pygame.transform.scale(surface, (int(object_width*self.size[0]/1900), int(object_height*self.size[1]/1100)))
+            object_width, object_height = surface.get_size()
+            screen_location = (int((x - object_width)*self.size[0]/1900), int((y - object_height)*self.size[1]/1100))
             self._screen.blit(surface, screen_location)
 
         pygame.display.flip()
+        
+    def resize (self, event):
+		self.size = (event.w, event.h)
+		self._window = pygame.display.set_mode(self.size, pygame.RESIZABLE)
+		pygame.display.set_caption("SR Turtle Robot Simulator")
+		self._screen = pygame.display.get_surface()
+		self._draw_background()
+		self._draw()
+		
 
     ## Public Methods ##
 
