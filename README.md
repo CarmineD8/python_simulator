@@ -11,25 +11,6 @@ The simulator requires a Python 2.7 installation, the [pygame](http://pygame.org
 
 Once the dependencies are installed, simply run the `test.py` script to test out the simulator.
 
-## Exercise
------------------------------
-
-To run one or more scripts in the simulator, use `run.py`, passing it the file names. 
-
-I am proposing you three exercises, with an increasing level of difficulty.
-The instruction for the three exercises can be found inside the .py files (exercise1.py, exercise2.py, exercise3.py).
-
-When done, you can run the program with:
-
-```bash
-$ python run.py exercise1.py
-```
-
-You have also the solutions of the exercises (folder solutions)
-
-```bash
-$ python run.py solutions/exercise1_solution.py
-```
 
 Robot API
 ---------
