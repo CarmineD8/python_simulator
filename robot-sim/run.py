@@ -2,6 +2,12 @@
 import yaml
 import threading
 import argparse
+import sys
+
+from functools import reduce
+
+sys.path.append("sr/robot")
+sys.path.append("sr/robot/arenas")
 
 from sr.robot import *
 
@@ -35,7 +41,6 @@ class RobotThread(threading.Thread):
         super(RobotThread, self).__init__(*args, **kwargs)
         self.zone = zone
         self.script = script.name
-        print (self.script)
         self.daemon = True
 
     def run(self):
