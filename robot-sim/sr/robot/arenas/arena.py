@@ -4,8 +4,8 @@ from math import pi
 
 import pygame
 
-from ..display import get_surface
-from ..markers import WallMarker
+from display import get_surface
+from markers import WallMarker
 
 import threading
 

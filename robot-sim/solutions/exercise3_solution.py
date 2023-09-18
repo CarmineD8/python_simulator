@@ -43,12 +43,13 @@ silver = True
 R = Robot()
 """ instance of the class Robot"""
 
+
 def drive(speed, seconds):
     """
     Function for setting a linear velocity
-    
+
     Args: speed (int): the speed of the wheels
-	  seconds (int): the time interval
+          seconds (int): the time interval
     """
     R.motors[0].m0.power = speed
     R.motors[0].m1.power = speed
@@ -56,12 +57,13 @@ def drive(speed, seconds):
     R.motors[0].m0.power = 0
     R.motors[0].m1.power = 0
 
+
 def turn(speed, seconds):
     """
     Function for setting an angular velocity
-    
+
     Args: speed (int): the speed of the wheels
-	  seconds (int): the time interval
+          seconds (int): the time interval
     """
     R.motors[0].m0.power = speed
     R.motors[0].m1.power = -speed
@@ -69,69 +71,71 @@ def turn(speed, seconds):
     R.motors[0].m0.power = 0
     R.motors[0].m1.power = 0
 
+
 def find_silver_token():
     """
     Function to find the closest silver token
 
     Returns:
-	dist (float): distance of the closest silver token (-1 if no silver token is detected)
-	rot_y (float): angle between the robot and the silver token (-1 if no silver token is detected)
+        dist (float): distance of the closest silver token (-1 if no silver token is detected)
+        rot_y (float): angle between the robot and the silver token (-1 if no silver token is detected)
     """
-    dist=100
+    dist = 100
     for token in R.see():
         if token.dist < dist and token.info.marker_type is MARKER_TOKEN_SILVER:
-            dist=token.dist
-	    rot_y=token.rot_y
-    if dist==100:
-	return -1, -1
+            dist = token.dist
+            rot_y = token.rot_y
+    if dist == 100:
+        return -1, -1
     else:
-   	return dist, rot_y
+        return dist, rot_y
+
 
 def find_golden_token():
     """
     Function to find the closest golden token
 
     Returns:
-	dist (float): distance of the closest golden token (-1 if no golden token is detected)
-	rot_y (float): angle between the robot and the golden token (-1 if no golden token is detected)
+        dist (float): distance of the closest golden token (-1 if no golden token is detected)
+        rot_y (float): angle between the robot and the golden token (-1 if no golden token is detected)
     """
-    dist=100
+    dist = 100
     for token in R.see():
         if token.dist < dist and token.info.marker_type is MARKER_TOKEN_GOLD:
-            dist=token.dist
-	    rot_y=token.rot_y
-    if dist==100:
-	return -1, -1
+            dist = token.dist
+            rot_y = token.rot_y
+    if dist == 100:
+        return -1, -1
     else:
-   	return dist, rot_y
+        return dist, rot_y
+
 
 while 1:
-    if silver == True: # if silver is True, than we look for a silver token, otherwise for a golden one
-	dist, rot_y = find_silver_token()
+    if silver == True:  # if silver is True, than we look for a silver token, otherwise for a golden one
+        dist, rot_y = find_silver_token()
     else:
-	dist, rot_y = find_golden_token()
-    if dist==-1: # if no token is detected, we make the robot turn 
-	print("I don't see any token!!")
-	turn(+10, 1)
-    elif dist <d_th: # if we are close to the token, we try grab it.
+        dist, rot_y = find_golden_token()
+    if dist == -1:  # if no token is detected, we make the robot turn
+        print("I don't see any token!!")
+        turn(+10, 1)
+    elif dist < d_th:  # if we are close to the token, we try grab it.
         print("Found it!")
-        if R.grab(): # if we grab the token, we move the robot forward and on the right, we release the token, and we go back to the initial position
+        if R.grab():  # if we grab the token, we move the robot forward and on the right, we release the token, and we go back to the initial position
             print("Gotcha!")
-	    turn(20, 2)
-	    drive(20,2)
-	    R.release()
-	    drive(-20,2)
-	    turn(-20,2)
-	    silver = not silver # we modify the value of the variable silver, so that in the next step we will look for the other type of token
-	else:
+            turn(20, 2)
+            drive(20, 2)
+            R.release()
+            drive(-20, 2)
+            turn(-20, 2)
+            silver = not silver  # we modify the value of the variable silver, so that in the next step we will look for the other type of token
+        else:
             print("Aww, I'm not close enough.")
-    elif -a_th<= rot_y <= a_th: # if the robot is well aligned with the token, we go forward
-	print("Ah, that'll do.")
+    elif -a_th <= rot_y <= a_th:  # if the robot is well aligned with the token, we go forward
+        print("Ah, that'll do.")
         drive(10, 0.5)
-    elif rot_y < -a_th: # if the robot is not well aligned with the token, we move it on the left or on the right
+    elif rot_y < -a_th:  # if the robot is not well aligned with the token, we move it on the left or on the right
         print("Left a bit...")
         turn(-2, 0.5)
     elif rot_y > a_th:
         print("Right a bit...")
         turn(+2, 0.5)
-	

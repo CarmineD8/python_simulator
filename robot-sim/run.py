@@ -34,7 +34,8 @@ class RobotThread(threading.Thread):
     def __init__(self, zone, script, *args, **kwargs):
         super(RobotThread, self).__init__(*args, **kwargs)
         self.zone = zone
-        self.script = script
+        self.script = script.name
+        print (self.script)
         self.daemon = True
 
     def run(self):
@@ -46,7 +47,8 @@ class RobotThread(threading.Thread):
                 robot_object.heading = sim.arena.start_headings[self.zone]
                 return robot_object
 
-        exec(self.script, {'Robot': robot})
+        exec(open(self.script).read(), {'Robot': robot})
+
 
 threads = []
 for zone, robot in enumerate(robot_scripts):
