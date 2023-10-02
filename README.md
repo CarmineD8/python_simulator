@@ -7,9 +7,7 @@ Some of the arenas and the exercises have been modified for the Research Track I
 Installing and running
 ----------------------
 
-The simulator requires a Python 2.7 installation, the [pygame](http://pygame.org/) library, [PyPyBox2D](https://pypi.python.org/pypi/pypybox2d/2.1-r331), and [PyYAML](https://pypi.python.org/pypi/PyYAML/).
-
-Once the dependencies are installed, simply run the `test.py` script to test out the simulator.
+Please follow the instructions provided in the slides. 
 
 ## Exercise
 -----------------------------
