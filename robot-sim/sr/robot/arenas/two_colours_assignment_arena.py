@@ -56,19 +56,14 @@ class TwoColoursAssignmentArena(Arena):
         def place_token_circle(radius, number_offset=0, angle_offset=0.25 * pi,
                                rotate_silvers=0.0):
             for i in range(TOKENS_PER_CIRCLE):
-                if radius == INNER_CIRCLE_RADIUS:
-                    token_type = SilverToken
-                    rotation_amount = 0
-                else:
-                    token_type = GoldToken
-                    rotation_amount = 0
+                token_type = GoldToken
+                rotation_amount = 0
                 token = token_type(self, number_offset + i)
                 angle = angle_offset + (2 * pi / TOKENS_PER_CIRCLE) * i
                 token.location = (cos(angle) * radius, sin(angle) * radius)
                 token.heading = rotation_amount
                 self.objects.append(token)
 
-        place_token_circle(INNER_CIRCLE_RADIUS)
         place_token_circle(OUTER_CIRCLE_RADIUS, number_offset=TOKENS_PER_CIRCLE,
                            angle_offset=1.5 * pi, rotate_silvers=pi / 4)
 
