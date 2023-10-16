@@ -1,4 +1,3 @@
-
 import yaml
 import threading
 import argparse
@@ -14,7 +13,7 @@ from sr.robot import *
 parser = argparse.ArgumentParser()
 parser.add_argument('-c', '--config',
                     type=argparse.FileType('r'),
-                    default='games/two_colours.yaml')
+                    default='games/two_colours_assignment.yaml')
 parser.add_argument('robot_scripts',
                     type=argparse.FileType('r'),
                     nargs='*')
@@ -53,7 +52,6 @@ class RobotThread(threading.Thread):
                 return robot_object
 
         exec(open(self.script).read(), {'Robot': robot})
-
 
 threads = []
 for zone, robot in enumerate(robot_scripts):
